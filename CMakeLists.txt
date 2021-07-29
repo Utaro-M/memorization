@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.0.2)
-project(recognition_ws)
+project(memorization)
 
 ## Compile as C++11, supported in ROS Kinetic and newer
 # add_compile_options(-std=c++11)
@@ -8,10 +8,16 @@ project(recognition_ws)
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
+  dynamic_reconfigure
   roscpp
   rospy
   std_msgs
-)
+  )
+find_package(PythonLibs REQUIRED)
+
+generate_dynamic_reconfigure_options(
+  cfg/NearFarParams.cfg
+  )
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
