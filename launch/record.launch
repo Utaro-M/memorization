@@ -1,0 +1,5 @@
+<launch>
+  <arg name="bags_directory" value="/tmp"/>
+  <node name="bag_record" pkg="rosbag" type="record"
+        args="record -o $(arg bags_directory)/bag /rosout /tf"/>
+</launch>
