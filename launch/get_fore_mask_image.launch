@@ -1,0 +1,12 @@
+<launch>
+<node name="get_data_images"
+      pkg="memorization" type="get_fore_mask_image.py" output="screen">
+  <!-- <remap from="~input/depth_image" to="/rs_l515/depth/image_rect_raw" /> -->
+  <remap from="~input/depth_image" to="/rs_l515/aligned_depth_to_color/image_raw" />
+  <remap from="~input/color_image" to="/rs_l515/color/image_raw" />
+  <rosparam>
+    near: 0
+    far: 3
+  </rosparam>
+</node>
+</launch>
