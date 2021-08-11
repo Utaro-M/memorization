@@ -197,8 +197,8 @@ class MaskRCNNInstanceSegmentation(ConnectionBasedTransport):
         msg_indices = ClusterPointIndices(header=imgmsg.header)
         msg_labels = LabelArray(header=imgmsg.header)
         # -1: label for background
-        lbl_cls = - np.ones(img.shape[:2], dtype=np.int32)
-        lbl_ins = - np.ones(img.shape[:2], dtype=np.int32)
+        lbl_cls = - np.ones(img.shape[:2], dtype=np.int16)
+        lbl_ins = - np.ones(img.shape[:2], dtype=np.int16)
         for ins_id, (mask, label) in enumerate(zip(masks, labels)):
             indices = np.where(mask.flatten())[0]
             indices_msg = PointIndices(header=imgmsg.header, indices=indices)
