@@ -1,0 +1,13 @@
+<launch>
+  <arg name="bags_directory" default="/tmp"/>
+  <arg name="file_name" default="bag_2021-08-05-16-34-42"/>
+  <arg name="topic" default="/rs_l515/color/image_raw"/>
+  <arg name="duration" default="2"/>
+  <arg name="start" default="0"/>
+  <arg name="rate" default="2"/>
+  <node pkg="rosbag" type="play" name="rosbag" args="-u $(arg duration) -s $(arg start) -r $(arg rate) $(arg bags_directory)/$(arg file_name).bag"/>
+  <node name="extract" pkg="image_view" type="extract_images" respawn="false" output="screen" cwd="ROS_HOME">
+    <remap from="image" to="$(arg topic)"/>
+  </node>
+</launch>
+
