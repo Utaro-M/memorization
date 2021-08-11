@@ -1,0 +1,22 @@
+<launch>
+
+  <arg name="mask_img" default="/rs_l515/color/image_raw" />
+  <arg name="pcl" default="/rs_l515/depth_registered/points" />
+  <arg name="camera_info" default="/rs_l515/camera_info" />
+  
+  <node name="mask_image_filter" pkg="jsk_pcl_ros" type="mask_image_filter">
+    <param name="~negative" value="false" />
+    <remap from="~input" to="$(arg pcl)" />
+    <remap from="~input/mask" to="$(arg mask_img)" />
+    <remap from="~input/camera_info" to="$(arg camera_info)" />
+  </node>
+
+  <node name="extract_indices" pkg="jsk_pcl_ros" type="extract_indices">
+    <remap from="~input" to="$(arg pcl)" />
+    <remap from="~indices" to="/mask_image_filter/output" />
+    <rosparam>
+      keep_organized: true
+    </rosparam>
+  </node>
+
+</launch>
