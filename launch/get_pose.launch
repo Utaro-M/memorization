@@ -1,6 +1,7 @@
 <launch>
 
-  <arg name="mask_img" default="/rs_l515/color/image_raw" />
+  <arg name="img" default="/rs_l515/color/image_raw" />
+  <arg name="mask_img" default="/mask_rcnn_instance_segmentation/output/viz" />
   <arg name="pcl" default="/rs_l515/depth_registered/points" />
   <arg name="camera_info" default="/rs_l515/camera_info" />
   
