@@ -25,13 +25,12 @@
       min_size: 0
       max_size: 307200
       approximate_sync: true
-      downsample_enable: $(arg downsample)
       multi: true
       queue_size: 100
       cluster_filter: 1  <!-- take max size of clustering in each cluster -->
     </rosparam>
   </node>
-
+  <!-- downsample_enable: $(arg downsample) -->
   <node name="multi_euclidean_cluster_point_indices_decomposer"
         pkg="nodelet" type="nodelet"
         args="standalone jsk_pcl/ClusterPointIndicesDecomposer">
@@ -42,6 +41,14 @@
       use_pca: true
       approximate_sync: false
       queue_size: 100
+    </rosparam>
+  </node>
+  
+  <node name="grabpose" pkg="memorization" type="get_grab_pose.py">
+    <remap from="~bbox" to="/multi_euclidean_cluster_point_indices_decomposer/boxes" />
+
+    <rosparam>
+      keep_organized: true
     </rosparam>
   </node>
 
