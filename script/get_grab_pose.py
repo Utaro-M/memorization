@@ -18,8 +18,8 @@ from jsk_recognition_msgs.msg import BoundingBoxArray
 
 class GetGrabPose(object):
     def __init__(self):
-        rospy.Subscriber('/bbox', BoundingBoxArray, self.get_params)
-        rospy.Subscriber('/hand_poses', BoundingBoxArray, self.get_poses)
+        rospy.Subscriber('~bbox', BoundingBoxArray, self.get_params)
+        # rospy.Subscriber('/hand_poses', BoundingBoxArray, self.get_poses)
         self.center = []
         self.r = []
         self.tgt_num = 1
@@ -29,7 +29,6 @@ class GetGrabPose(object):
         boxes = msg.boxes
         boxes_list =np.array([[]])
         dimension_list = np.array([[]])
-
         for box in boxes:
             print("np.array([[box.pose.position.x, box.pose.position.y, box.pose.position.z]] = {}".format(np.array([[box.pose.position.x, box.pose.position.y, box.pose.position.z]])))
             boxes_list = np.append(boxes_list,np.array([[box.pose.position.x, box.pose.position.y, box.pose.position.z]]),axis=1)

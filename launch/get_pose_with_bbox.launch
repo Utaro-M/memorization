@@ -44,9 +44,8 @@
     </rosparam>
   </node>
   
-  <node name="grabpose" pkg="memorization" type="get_grab_pose.py">
+  <node name="grabpose" pkg="memorization" type="get_grab_pose.py" output="screen">
     <remap from="~bbox" to="/multi_euclidean_cluster_point_indices_decomposer/boxes" />
-
     <rosparam>
       keep_organized: true
     </rosparam>
