@@ -2,6 +2,14 @@
   <arg name="bags_directory" value="/tmp"/>
   <arg name="file_name" default="depth_aligned"/>
   <node name="bag_record" pkg="rosbag" type="record"
-        args="record -o $(arg bags_directory)/$(file_name) /tf /rs_l515/color/image_raw /rs_l515/depth/image_rect_raw 
-              /rs_l515/aligned_depth_to_color/image_raw"/>
+        args="record -o $(arg bags_directory)/$(arg file_name)
+              /tf
+              /tf_static
+              /rs_l515/color/image_raw
+              /rs_l515/depth/image_rect_raw
+              /rs_l515/depth_registered/points
+              /rs_l515/color/camera_info
+              /rs_l515/depth/camera_info
+              "/>
 </launch>
+<!-- /rs_l515/aligned_depth_to_color/image_raw -->
