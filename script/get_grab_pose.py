@@ -46,4 +46,4 @@ if __name__ == '__main__':
     print("OK")
     rospy.init_node("PutPointsOnImage")
     PutPointsOnImage_obj = PutPointsOnImage()
-    rospy.spin()        
+    rospy.spin()
