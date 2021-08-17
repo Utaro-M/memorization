@@ -4,6 +4,7 @@ import numpy as np
 from jsk_recognition_msgs.msg import BoundingBoxArray
 from geometry_msgs.msg import PoseStamped
 from std_srvs.srv import SetBool
+from memorization.srv import String
 
 class Memorize(object):
     def __init__(self):
@@ -12,7 +13,7 @@ class Memorize(object):
         rospy.Subscriber('~slave_larm_pose', PoseStamped, self.get_lhand_pose)
 
         self.get_target_params_srv = rospy.Service('memorize_target_params', SetBool, self.memorize_target_params)
-        # self.get_hand_poses_srv = rospy.Service('memorize_hand_poses', , self.memorize_hand_poses)
+        self.get_hand_poses_srv = rospy.Service('memorize_hand_poses', String, self.memorize_hand_poses)
         self.center = []
         self.r = []
         self.tgt_num = 1
@@ -46,10 +47,12 @@ class Memorize(object):
 
     def memorize_hand_poses(self,req):
         print("memorize_hand_poses")
-        if "r" in req.data:
+        if "r" in str(req.data):
             self.memory["rhand_pose"] = self.rhand_pose
-        elif "l" in req.data:
+            print("memorize rhand_pose")
+        if "l" in str(req.data):
             self.memory["lhand_pose"] = self.lhand_pose
+            print("memorize lhand_pose")
 
     def memorize_target_params(self,req):
         print("memorize params: center: {}, r: {}".format(self.memory["center"], self.memory["radious"]))
