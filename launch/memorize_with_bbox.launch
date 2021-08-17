@@ -44,8 +44,10 @@
     </rosparam>
   </node>
   
-  <node name="grabpose" pkg="memorization" type="get_grab_pose.py" output="screen">
+  <node name="memorize" pkg="memorization" type="memorize.py" output="screen">
     <remap from="~bbox" to="/multi_euclidean_cluster_point_indices_decomposer/boxes" />
+    <remap from="~slave_rarm_pose" to="/test_publisher/slave_rarm_pose" />
+    <remap from="~slave_larm_pose" to="/test_publisher/slave_larm_pose" />
     <rosparam>
       keep_organized: true
     </rosparam>
