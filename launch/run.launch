@@ -6,4 +6,10 @@
 
   <include file="get_pose_with_bbox.launch"></include>
 
+  <node pkg="memorization" type="test_publisher.py"
+        name="test_publisher" output="screen"></node>
+
+  <node pkg="memorization" type="test_client.py"
+        name="test_client" output="screen"></node>
+
 </launch>
