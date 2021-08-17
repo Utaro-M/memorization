@@ -1,0 +1,9 @@
+<launch>
+
+  <include file="mask_rcnn_instance_segmentation_docker.launch">
+    <arg name="INPUT_IMAGE" value="/rs_l515/color/image_raw" />
+  </include>
+
+  <include file="get_pose_with_bbox.launch"></include>
+
+</launch>
