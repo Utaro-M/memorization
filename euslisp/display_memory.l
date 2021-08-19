@@ -6,8 +6,14 @@
 
 (ros::subscribe "~slave_rarm_pose" geometry_msgs::PoseStamped #'call-back-r)
 (ros::subscribe "~slave_larm_pose" geometry_msgs::PoseStamped #'call-back-l)
+(ros::subscribe "~recognizedparams" memorization_msgs::RecognizedParams #'call-back-params)
 
-
+(defun call-back-params(msg)
+  (setq boxes (send msg box))
+  (setq radious (send msg radious))
+  (mapcar #'(lambda (box) (prong (setq sorted_list (quick-sort (list (send (send box dimensions) x) (send (send box dimensions) y) (send (send box dimensions) z)))) (make-cylinder (+ (elt sorted_list 1) (elt sorted_list 2)) (elt sorted_list 0)
+  (while (boxes)
+    (setq (make-cylinder radious (send
 (do-until-key
  (setq cnt (+ cnt 1))
  ;;平面がない時はリセット
