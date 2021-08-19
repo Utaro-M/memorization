@@ -5,15 +5,22 @@ from jsk_recognition_msgs.msg import BoundingBoxArray
 from geometry_msgs.msg import PoseStamped
 from std_srvs.srv import SetBool
 from memorization.srv import String
+from memorization.msg import Recognizedparams
 
 class Memorize(object):
     def __init__(self):
+        # subscriber
         rospy.Subscriber('~bbox', BoundingBoxArray, self.get_params)
         rospy.Subscriber('~slave_rarm_pose', PoseStamped, self.get_rhand_pose)
         rospy.Subscriber('~slave_larm_pose', PoseStamped, self.get_lhand_pose)
-
+        #publisher
+        # self.pub_memory = rospy.Publisher('~memory', Memory, queue_size=10)
+        self.pub_params = rospy.Publisher('~recognizedparams', RecognizedParams, queue_size=10)
+        #service
         self.get_target_params_srv = rospy.Service('memorize_target_params', SetBool, self.memorize_target_params)
         self.get_hand_poses_srv = rospy.Service('memorize_hand_poses', String, self.memorize_hand_poses)
+
+        self.box = []
         self.center = []
         self.r = []
         self.tgt_num = 1
@@ -22,19 +29,25 @@ class Memorize(object):
         self.memory = {"center": self.center, "radious": self.r, "rhand_pose": self.rhand_pose, "lhand_pose": self.lhand_pose}
         
     def get_params(self,msg):
-        boxes = msg.boxes
-        boxes_list =np.array([[0,0,0]])
+        # boxes_list =np.array([[0,0,0]])
         dimension_list = np.array([[0,0,0]])
-        for box in boxes:
-            boxes_list = np.append(boxes_list,np.array([[box.pose.position.x, box.pose.position.y, box.pose.position.z]]),axis=0)
+        for box in msg.boxes:
+            # boxes_list = np.append(boxes_list,np.array([[box.pose.position.x, box.pose.position.y, box.pose.position.z]]),axis=0)
             dimension_list = np.append(dimension_list,np.array([[box.dimensions.x, box.dimensions.y, box.dimensions.z]]),axis=0)
-        boxes_list = boxes_list[1:]
+        # boxes_list = boxes_list[1:]
         dimension_list = dimension_list[1:]
         sorted_index = np.argsort(map(lambda x :abs(x[0]*x[1]*x[2]),dimension_list)[::-1])[:self.tgt_num] #extract self.tgt_num
-        boxes_list = boxes_list[sorted_index]
+        # boxes_list = boxes_list[sorted_index]
         dimension_list = dimension_list[sorted_index]
-        self.center = boxes_list
+        boxes_list = np.array(msg.boxes)[sorted_index]
+        self.center = map(lambda box : np.array([box.pose.position.x, box.pose.position.y, box.pose.position.z]) ,boxes_list)
+        self.box = boxes_list
+        # self.center = boxes_list
         self.r = map(lambda x : abs(x[0]) / 2.0 ,dimension_list)
+        params_msg = RecognizedParams()
+        params_msg.radious = self.r
+        params_msg.box = self.box.tolist()
+        self.pub_params.publish(params_msg)
         print("center: {}, r: {}".format(self.center,self.r))
 
     def get_rhand_pose(self,msg):
