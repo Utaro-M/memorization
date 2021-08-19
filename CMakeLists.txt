@@ -12,6 +12,8 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   rospy
   std_msgs
+  geometry_msgs
+  jsk_recognition_msgs
   message_generation
   )
 find_package(PythonLibs REQUIRED)
@@ -57,6 +59,7 @@ generate_dynamic_reconfigure_options(
 add_message_files(
   FILES
   Memory.msg
+  RecognizedParams.msg
 )
 
 ## Generate services in the 'srv' folder
@@ -76,6 +79,8 @@ add_service_files(
 generate_messages(
   DEPENDENCIES
   std_msgs
+  geometry_msgs
+  jsk_recognition_msgs
   )
 
 ################################################

@@ -5,7 +5,8 @@ from jsk_recognition_msgs.msg import BoundingBoxArray
 from geometry_msgs.msg import PoseStamped
 from std_srvs.srv import SetBool
 from memorization.srv import String
-from memorization.msg import Recognizedparams
+from memorization.msg import RecognizedParams
+from std_msgs.msg import Float32
 
 class Memorize(object):
     def __init__(self):
@@ -26,7 +27,7 @@ class Memorize(object):
         self.tgt_num = 1
         self.rhand_pose = PoseStamped()
         self.lhand_pose = PoseStamped()
-        self.memory = {"center": self.center, "radious": self.r, "rhand_pose": self.rhand_pose, "lhand_pose": self.lhand_pose}
+        self.memory = {"box":self.box, "center": self.center, "radious": self.r, "rhand_pose": self.rhand_pose, "lhand_pose": self.lhand_pose}
         
     def get_params(self,msg):
         # boxes_list =np.array([[0,0,0]])
@@ -40,12 +41,15 @@ class Memorize(object):
         # boxes_list = boxes_list[sorted_index]
         dimension_list = dimension_list[sorted_index]
         boxes_list = np.array(msg.boxes)[sorted_index]
-        self.center = map(lambda box : np.array([box.pose.position.x, box.pose.position.y, box.pose.position.z]) ,boxes_list)
+        self.center = map(lambda box : [box.pose.position.x, box.pose.position.y, box.pose.position.z] ,boxes_list)
         self.box = boxes_list
         # self.center = boxes_list
         self.r = map(lambda x : abs(x[0]) / 2.0 ,dimension_list)
         params_msg = RecognizedParams()
-        params_msg.radious = self.r
+        radious_msg = [Float32() for i in self.r]
+        for i in range(len(self.r)):
+            radious_msg[i].data = self.r[i]
+        params_msg.radious = radious_msg
         params_msg.box = self.box.tolist()
         self.pub_params.publish(params_msg)
         print("center: {}, r: {}".format(self.center,self.r))
@@ -69,6 +73,7 @@ class Memorize(object):
 
     def memorize_target_params(self,req):
         print("memorize params: center: {}, r: {}".format(self.memory["center"], self.memory["radious"]))
+        self.memory["box"] = self.box
         self.memory["center"] = self.center
         self.memory["radious"] = self.r
 
