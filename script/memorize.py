@@ -49,10 +49,12 @@ class Memorize(object):
         radious_msg = [Float32() for i in self.r]
         for i in range(len(self.r)):
             radious_msg[i].data = self.r[i]
+        params_msg.header = msg.header
         params_msg.radious = radious_msg
         params_msg.box = self.box.tolist()
         self.pub_params.publish(params_msg)
-        print("center: {}, r: {}".format(self.center,self.r))
+        print("publish")
+        # print("center: {}, r: {}".format(self.center,self.r))
 
     def get_rhand_pose(self,msg):
         # print("get_rhand_pose")

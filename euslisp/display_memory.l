@@ -21,7 +21,7 @@
   (format t "in rarm-cb/n")
   )
 (ros::subscribe "~slave_rarm_pose" geometry_msgs::PoseStamped #'call-back-r)
-(ros::subscribe "~recognizedparams" memorization::RecognizedParams #'call-back-params)
+(ros::subscribe "~recognized_params" memorization::RecognizedParams #'call-back-params)
 ;; (ros::subscribe "memorize/recognizedparams" memorization::RecognizedParams #'call-back-params)
 (do-until-key
  ;; (setq cnt (+ cnt 1))

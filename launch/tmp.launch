@@ -1,7 +1,8 @@
 <launch>
   <node pkg="memorization" type="display_memory.l"
         name="display_memory" output="screen">
-    <remap from="~recognizedparams" to="/memorize/recognized_params" />
+    <remap from="~recognized_params" to="/memorize/recognized_params" />
     <remap from="~slave_rarm_pose" to="/test_publisher/slave_rarm_pose" />
   </node>
 </launch>
+
