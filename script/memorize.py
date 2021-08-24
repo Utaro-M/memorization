@@ -16,7 +16,7 @@ class Memorize(object):
         rospy.Subscriber('~slave_larm_pose', PoseStamped, self.get_lhand_pose)
         #publisher
         # self.pub_memory = rospy.Publisher('~memory', Memory, queue_size=10)
-        self.pub_params = rospy.Publisher('~recognizedparams', RecognizedParams, queue_size=10)
+        self.pub_params = rospy.Publisher('~recognized_params', RecognizedParams, queue_size=1)
         #service
         self.get_target_params_srv = rospy.Service('memorize_target_params', SetBool, self.memorize_target_params)
         self.get_hand_poses_srv = rospy.Service('memorize_hand_poses', String, self.memorize_hand_poses)
