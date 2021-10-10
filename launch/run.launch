@@ -1,7 +1,7 @@
 <launch>
 
   <include file="$(find memorization)/launch/mask_rcnn_instance_segmentation_docker.launch">
-    <arg name="INPUT_IMAGE" value="/rs_l515/color/image_raw" />
+    <arg name="INPUT_IMAGE" value="/camera/color/image_raw" />
   </include>
 
   <include file="$(find memorization)/launch/memorize_with_bbox.launch"></include>

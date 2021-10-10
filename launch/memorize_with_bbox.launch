@@ -1,9 +1,9 @@
 <launch>
 
-  <arg name="img" default="/rs_l515/color/image_raw" />
+  <arg name="img" default="/camera/color/image_raw" />
   <arg name="mask_img" default="/mask_rcnn_instance_segmentation/output/viz" />
-  <arg name="cloud" default="/rs_l515/depth_registered/points" />
-  <arg name="camera_info" default="/rs_l515/camera_info" />
+  <arg name="cloud" default="/camera/depth_registered/points" />
+  <arg name="camera_info" default="/camera/camera_info" />
   <arg name="input_indices" default="/mask_rcnn_instance_segmentation/output/cluster_indices" />
 
   <node name="extract_indices" pkg="jsk_pcl_ros" type="extract_indices">
