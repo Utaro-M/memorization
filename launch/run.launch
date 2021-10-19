@@ -1,10 +1,16 @@
 <launch>
-
+  <arg name="img" default="/camera/color/image_raw" />
+  <arg name="cloud" default="/camera/depth_registered/points" />
+  <arg name="camera_info" default="/camera/camera_info" />
   <include file="$(find memorization)/launch/mask_rcnn_instance_segmentation_docker.launch">
-    <arg name="INPUT_IMAGE" value="/camera/color/image_raw" />
+    <arg name="INPUT_IMAGE" value="$(arg img)" />
   </include>
 
-  <include file="$(find memorization)/launch/memorize_with_bbox.launch"></include>
+  <include file="$(find memorization)/launch/memorize_with_bbox.launch">
+    <arg name="img" value="$(arg img)" />
+    <arg name="cloud" value="$(arg cloud)" />
+    <arg name="camera_info" value="$(arg camera_info)" />
+  </include>
 
   <node pkg="memorization" type="test_publisher.py"
         name="test_publisher" output="screen"></node>
